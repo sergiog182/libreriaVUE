@@ -1,0 +1,164 @@
+<html>
+	<head>
+		<title>
+			Pruebas VUE
+		</title>
+		<script src="js/vue.js"></script>
+		<link rel="stylesheet" type="text/css" href="css/main.css">
+	</head>
+	<body>
+		<div id="app">
+			<div>
+				<invertir />
+			</div>
+
+            <hr>
+
+			<div>
+				<bienvenido />
+			</div>
+
+            <hr>
+
+			<div>
+				<suma />
+			</div>
+
+            <hr>
+
+			<div>
+				<validaciones />
+			</div>
+
+            <hr>
+
+			<div>
+				<experiencia />
+			</div>
+
+            <hr>
+
+			<div>
+				<restaurantes />
+			</div>
+		</div>
+	</body>
+</html>
+
+<script type="x-template" id="templateInvertir">
+	<div class="contenedor-componente">
+        <h1>
+            Componente Invertir
+        </h1>
+        <div class="contenedor-principal">
+            <div class="contenedor-secundario">
+                <p> bienvenido, {{ name }} </p>
+            </div>
+            <div class="contenedor-secundario">
+                <p>Datos almacenados en el VM:</p>
+                <pre>
+                    {{ $data }}
+                </pre>
+            </div>
+            <div class="contenedor-secundario">
+                <input type="text" v-model="name" class="campo-texto"/> 
+                &nbsp;
+                <button type="button" class="boton" v-on:click="revertir">Invertir</button>
+            </div>
+        </div>
+    </div>
+</script>
+
+<script type="x-template" id="templateBienvenido">
+	<div class="contenedor-componente">
+        <h1>
+            Componente Bienvenido
+        </h1>
+        <div class="contenedor-principal">
+            <div id="formulario" v-if="!formSubmitted">
+                <!-- v-on se puede reemplazar por @ -->
+                <form v-on:submit.prevent="validarDatos">
+                    Primer Nombre: <input type="text" id="first_name" class="campo-texto" v-model="first_name"/>
+                    <br>
+                    Apellido: <input type="text" id="last_name" class="campo-texto" v-model="last_name"/>
+                    <br>
+                    <!-- v-bind se puede reemplazar por : -->
+                    <button type="submit" v-bind:disabled="!isFormValid()">Continuar</button>
+                </form>
+            </div>
+            <div id="mensaje"  v-else>
+                Bienvenido {{ first_name }} {{ last_name }}
+            </div>
+        </div>
+    </div>
+</script>
+
+<script type="x-template" id="templateSuma">
+	<div class="contenedor-componente">
+        <h1>
+            Componente Suma
+        </h1>
+        <div class="contenedor-principal">
+            Primero: <input type="number" id="primero" class="campo-texto" v-model="primero"/>
+            <br>
+            Segundo: <input type="number" id="segundo" class="campo-texto" v-model="segundo"/>
+            <br>
+            Total: {{ total }}
+        </div>
+    </div>
+</script>
+
+<script type="x-template" id="templateValidaciones">
+	<div class="contenedor-componente">
+        <h1>
+            Componente Validaciones
+        </h1>
+        <div class="contenedor-principal">
+            <form @submit.prevent="validarDatos">
+				Nombres: <input type="text" id="nombres" class="campo-texto" v-model="nombres"/>
+				<br>
+				Apellidos: <input type="text" id="apellidos" class="campo-texto" v-model="apellidos"/>
+				<br>
+				Comentario:
+				<br>
+				<textarea v-model="comentario"></textarea>
+				<br><font color="red" v-show="errorComentario" v-if="mensajeError != ''"><p> {{ mensajeError }} </p></font>
+				<!-- v-bind se puede reemplazar por : -->
+				<button type="submit" v-bind:disabled="!isFormValid()">Continuar</button>
+			</form>
+        </div>
+    </div>
+</script>
+
+<script type="x-template" id="templateExperiencia">
+	<div class="contenedor-componente">
+        <h1>
+            Componente Experiencia
+        </h1>
+        <div class="contenedor-principal">
+            A&ntilde;os de experiencia: <input type="number" v-model="experienceYears" disabled/> 
+			&nbsp; <button type="button" @click="addYear">+</button>
+			&nbsp; <button type="button" @click="takeYear" :disabled="experienceYears == 0">-</button>
+        </div>
+    </div>
+</script>
+
+<script type="x-template" id="templateRestaurantes">
+	<div class="contenedor-componente">
+        <h1>
+            Componente Restaurantes
+        </h1>
+        <div class="contenedor-principal">
+            <ul>
+				<li v-for="(restaurant, index) in restaurants">
+					{{ restaurant }}
+					<button type="button" @click="eliminatRestaruante(index)"> - </button>
+				</li>
+			</ul>
+			<input type="text" v-model="newRestaurant" @keyup.enter="addRestaruant"/> &nbsp;
+			<button type="button" @click="addRestaruant">Agregar restaruante</button>
+        </div>
+    </div>
+</script>
+
+<script src='js/main.js'></script>
